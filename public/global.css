@@ -1,0 +1,24 @@
+::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    display: none;  /* Ocultar scroll */
+}
+.btn-flotante {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transition: all 300ms ease 0ms;
+    z-index: 99;
+}
+@media only screen and (max-width: 600px) {
+    .btn-flotante {
+        font-size: 14px;
+        padding: 12px 20px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+.hand{
+    cursor: pointer;
+}
