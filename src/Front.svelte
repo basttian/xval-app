@@ -18,7 +18,6 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile24";
 <div class="uk-section uk-section-xlarge uk-light uk-background-cover" style="background-image: url(./dark.jpg)">
     <div class="uk-container">
 	<h1 class="fontSizeh1">Hola {user.displayName}</h1>
-	<p class="paragraphp">Debes seleccionar una opcion antes de continuar.</p>
 
     <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
         <div>
