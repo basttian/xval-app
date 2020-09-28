@@ -5,8 +5,9 @@
     import "firebase/auth";
     
     const db = firebase.firestore();
-    import moment from 'moment';
+    //import moment from 'moment';
     import 'moment/locale/es';
+    import moment from 'moment-timezone';
     import { Router, Route, Link } from 'yrv';
     export let router = {};
     let id = null;
@@ -20,7 +21,7 @@
     import { onMount } from 'svelte';
     //let _inicio, _fin,_duracion;
     let preguntas = [];
-    let now = moment().valueOf();
+    let now =  moment.utc().tz("America/Argentina/Buenos_Aires").valueOf();
  
    onMount(async () => {
       await db.doc(`examenes/${id}`).get().then(function(doc) {
@@ -35,7 +36,7 @@
             }
 
         const interval = setInterval(() => {
-            now = moment().valueOf();
+            now = moment.utc().tz("America/Argentina/Buenos_Aires");
         }, 1000);
 
         return () => {
