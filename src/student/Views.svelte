@@ -8,13 +8,16 @@
 	import moment from 'moment';
 	let _date = moment().format('dddd Do [de] MMMM [del] YYYY');
 	import 'moment/locale/es';
+	import m from 'moment-timezone';
+
 	import { onMount } from 'svelte';
 	import { Router, Route, Link } from 'yrv';
 	let time = moment().valueOf();
 
 	onMount(() => {
+
 		const interval = setInterval(() => {
-			time = moment();
+			time = moment().valueOf();
 		}, 1000);
 		return () => {
 			clearInterval(interval);
@@ -182,12 +185,15 @@
 					<div>
 						<h4 class="uk-heading-divider"><span uk-icon="icon: calendar"></span> {examen.titulo} </h4>
 						<span class="">{examen.descripcion}</span>
-						<span class="uk-text-bold">{moment(examen.inicia).format("LLLL")}</span>
-						{moment(examen.finaliza).format("LLLL")} 
+						<span class="uk-text-bold">{moment(examen.inicia).format("LLL")}</span>
+						{moment(examen.finaliza).format("LLL")} 
 						<span class="uk-text-bold">Duración {moment.duration(examen.duracion).asMinutes()} minutos.</span>
 					    <div class="uk-margin">
 
-						{#if (examen.inicia<=_tiempo && examen.finaliza>=_tiempo ) }
+<!--{_tiempo}
+{m.tz(moment(),"America/Argentina/Buenos_Aires").format("LLLL")}-->
+
+{#if (examen.inicia<=_tiempo && examen.finaliza>=_tiempo) }
 							<div class="uk-inline">
 								<a href="javascript:void(0)" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: copy"
 								on:click={()=>{copyTextToClipboard(examen.id)}}></a>
