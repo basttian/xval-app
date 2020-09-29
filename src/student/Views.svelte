@@ -15,7 +15,6 @@
 	let time = new Date();
 
 	onMount(() => {
-
 		const interval = setInterval(() => {
 			time = new Date();
 		}, 1000);
@@ -126,10 +125,6 @@
 <FirebaseApp firebase={firebase} >
 <User let:user={user} let:auth={auth} on:user>
 <div class="uk-container uk-margin-bottom">
-
-<h1 class="uk-text-center uk-text-capitalize uk-margin-top">{
-	m.utc().tz("America/Argentina/Buenos_Aires").format("LLLL")
-}</h1>
 
 	<div class="uk-alert-primary" uk-alert>
 		<button class="uk-alert-close" uk-close></button>
