@@ -77,10 +77,15 @@ document.onkeydown = function(){
 }
 
 </script>
-	<svelte:head>
-	<title>Home</title>
-  <link rel="stylesheet" href="./fonts/stylesheet.css" />
-	</svelte:head>
+<svelte:head>
+<title>Home</title>
+<link rel="stylesheet" href="./fonts/stylesheet.css" />
+<style>
+    body{
+        overscroll-behavior: none;
+    }
+</style>
+</svelte:head>
 
 
 <FirebaseApp {firebase}>
