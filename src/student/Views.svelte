@@ -6,18 +6,18 @@
     import { _userid, _displayName } from "../store/store.js"
 	//I love moment
 	import moment from 'moment';
-	let _date = moment().format('dddd Do [de] MMMM [del] YYYY');
 	import 'moment/locale/es';
 	import m from 'moment-timezone';
+	let _date = moment().format('dddd Do [de] MMMM [del] YYYY');
 
 	import { onMount } from 'svelte';
 	import { Router, Route, Link } from 'yrv';
-	let time = moment().valueOf();
+	let time = new Date();
 
 	onMount(() => {
 
 		const interval = setInterval(() => {
-			time = moment().valueOf();
+			time = new Date();
 		}, 1000);
 		return () => {
 			clearInterval(interval);
@@ -126,7 +126,11 @@
 <FirebaseApp firebase={firebase} >
 <User let:user={user} let:auth={auth} on:user>
 <div class="uk-container uk-margin-bottom">
-<h1 class="uk-text-center uk-text-capitalize uk-margin-top">{moment(_tiempo).format('dddd MMMM Do YYYY, h:mm:ss a')}</h1>
+
+<h1 class="uk-text-center uk-text-capitalize uk-margin-top">{
+	m.utc().tz("America/Argentina/Buenos_Aires").format("LLLL")
+}</h1>
+
 	<div class="uk-alert-primary" uk-alert>
 		<button class="uk-alert-close" uk-close></button>
 		<span class="uk-text-muted">Hola!! {user.displayName}, si cuentas con el código ingresalo en la casilla de abajo.</span>
@@ -190,29 +194,24 @@
 						<span class="uk-text-bold">Duración {moment.duration(examen.duracion).asMinutes()} minutos.</span>
 					    <div class="uk-margin">
 
-<!--{_tiempo}
-{m.tz(moment(),"America/Argentina/Buenos_Aires").format("LLLL")}-->
 
-{#if (examen.inicia<=_tiempo && examen.finaliza>=_tiempo) }
-							<div class="uk-inline">
-								<a href="javascript:void(0)" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: copy"
-								on:click={()=>{copyTextToClipboard(examen.id)}}></a>
-								<input class="uk-input uk-form-blank uk-form-width-large" value={examen.id} type="text">
-							</div>
-						{:else if examen.finaliza<=_tiempo}
-							<div class="uk-alert-danger" uk-alert>
-								<p><span uk-icon="icon: info"></span> El examen finalizo..</p>
-							</div>	
-						{:else}							
-							<div class="uk-alert-primary" uk-alert>
-								<p><span uk-icon="icon: warning"></span> El código no se encuentra disponible.</p>
-							</div>
-						{/if}
+		{#if (examen.inicia<=_tiempo && examen.finaliza>=_tiempo) }
+			<div class="uk-inline">
+				<a href="javascript:void(0)" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: copy" on:click={()=>{copyTextToClipboard(examen.id)}}></a>
+				<input class="uk-input uk-form-blank uk-form-width-large" value={examen.id} type="text">
+			</div>
+		{:else if examen.finaliza<=_tiempo }
+			<div class="uk-alert-danger" uk-alert>
+				<p><span uk-icon="icon: info"></span> El examen finalizo..</p>
+			</div>	
+		{:else}							
+			<div class="uk-alert-primary" uk-alert>
+				<p><span uk-icon="icon: warning"></span> El código no se encuentra disponible.</p>
+			</div>
+		{/if}
 						</div>
 					</div>
-
 				{/each}
-
 			</div>
 		{/if}
 </Collection>

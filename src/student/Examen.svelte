@@ -21,7 +21,7 @@
     import { onMount } from 'svelte';
     //let _inicio, _fin,_duracion;
     let preguntas = [];
-    let now =  moment.utc().tz("America/Argentina/Buenos_Aires").valueOf();
+    let now =  new Date()
  
    onMount(async () => {
       await db.doc(`examenes/${id}`).get().then(function(doc) {
@@ -36,7 +36,7 @@
             }
 
         const interval = setInterval(() => {
-            now = moment.utc().tz("America/Argentina/Buenos_Aires");
+            now = new Date();
         }, 1000);
 
         return () => {
