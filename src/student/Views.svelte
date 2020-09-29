@@ -8,24 +8,21 @@
 	import moment from 'moment';
 	import 'moment/locale/es';
 	import m from 'moment-timezone';
-	let _date = moment().format('dddd Do [de] MMMM [del] YYYY');
-
+	
 	import { onMount } from 'svelte';
 	import { Router, Route, Link } from 'yrv';
-	let time = new Date();
+	import { temporizador } from "../store/utils.js"
 
-	onMount(() => {
-		const interval = setInterval(() => {
-			time = new Date();
-		}, 1000);
-		return () => {
-			clearInterval(interval);
-		};
-	});
+	let now;
+	 onMount(() => {
+	 	setInterval(() => {
+            now = temporizador();
+        }, 1000);
+	 })
 
-	/* Funcional */
-    $: _tiempo = time;
-
+	/* Funcional peron no*/
+    $: _tiempo = now;
+  
 
 	import sha512 from 'crypto-js/sha512';
 	import Cookies from 'js-cookie';
@@ -121,6 +118,7 @@
 <svelte:head>
 <title>Home</title>
 </svelte:head>
+
 <!-- Body -->
 <FirebaseApp firebase={firebase} >
 <User let:user={user} let:auth={auth} on:user>
