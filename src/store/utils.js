@@ -11,7 +11,6 @@ export function onInterval(callback, milliseconds) {
 	});
 }
 
-
 export function temporizador(){
-		return m.tz("America/Argentina/Buenos_Aires");
+		return m.utc().tz("America/Argentina/Buenos_Aires");
     }
