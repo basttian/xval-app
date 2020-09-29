@@ -21,7 +21,9 @@
     import { onMount } from 'svelte';
     //let _inicio, _fin,_duracion;
     let preguntas = [];
-    let now =  new Date()
+
+    import { temporizador } from "../store/utils.js"
+    let now;
  
    onMount(async () => {
       await db.doc(`examenes/${id}`).get().then(function(doc) {
@@ -35,13 +37,17 @@
                 console.log("No such document!");
             }
 
-        const interval = setInterval(() => {
-            now = new Date();
-        }, 1000);
+        // const interval = setInterval(() => {
+        //     now = new Date();
+        // }, 1000);
 
-        return () => {
-            clearInterval(interval);
-        };
+        // return () => {
+        //     clearInterval(interval);
+        // };
+
+        await setInterval(() => {
+            now = temporizador();
+        }, 1000);
 
         }).catch(function(error) {
             console.log("Error getting document:", error);

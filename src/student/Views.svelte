@@ -14,8 +14,8 @@
 	import { temporizador } from "../store/utils.js"
 
 	let now;
-	 onMount(() => {
-	 	setInterval(() => {
+	 onMount(async() => {
+	 	await setInterval(() => {
             now = temporizador();
         }, 1000);
 	 })
@@ -118,7 +118,7 @@
 <svelte:head>
 <title>Home</title>
 </svelte:head>
-
+{_tiempo}
 <!-- Body -->
 <FirebaseApp firebase={firebase} >
 <User let:user={user} let:auth={auth} on:user>
