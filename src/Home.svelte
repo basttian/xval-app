@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 const db = firebase.firestore();
 import moment from 'moment';
 import 'moment/locale/es';
+import m from 'moment-timezone';
 import { Router, Route, Link } from 'yrv';
 export let router = {};
 let id = null;
@@ -15,14 +16,26 @@ import CryptoJS from "crypto-js";
 import sha512 from 'crypto-js/sha512';
 import { type } from "./store/store.js";
 import { onMount } from 'svelte';
+
+let time = new Date();
+
 	onMount(() => {
-		type.set(id)
+		type.set(id);
+
+        const interval = setInterval(() => {
+            time = new Date();
+        }, 1000);
+        return () => {
+            clearInterval(interval);
+        };
+
 	});
 
 import teacherViews from "./component/Views.svelte";
 import studentViews from "./student/Views.svelte";
 
-
+/* Funcional */
+$: _tiempo = time;
 
  </script>
     <svelte:head>
@@ -43,7 +56,9 @@ import studentViews from "./student/Views.svelte";
     </div>
     <div class="uk-navbar-right">
         <span class="uk-margin-right uk-text-uppercase">
-
+            <span class="uk-text-center uk-text-meta uk-text-uppercase uk-margin-top">{
+                m.utc().tz("America/Argentina/Buenos_Aires").format("dddd, D [de] MMMM [de] YYYY")
+            } {moment(_tiempo).format("LTS")}</span>
         </span>
     </div>
 </nav>
