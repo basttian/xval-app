@@ -45,7 +45,7 @@
         //     clearInterval(interval);
         // };
 
-        await setInterval(() => {
+        setInterval(() => {
             now = temporizador();
         }, 1000);
 

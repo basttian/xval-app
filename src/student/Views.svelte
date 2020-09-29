@@ -118,7 +118,7 @@
 <svelte:head>
 <title>Home</title>
 </svelte:head>
-{_tiempo}
+
 <!-- Body -->
 <FirebaseApp firebase={firebase} >
 <User let:user={user} let:auth={auth} on:user>

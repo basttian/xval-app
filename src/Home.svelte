@@ -17,25 +17,21 @@ import sha512 from 'crypto-js/sha512';
 import { type } from "./store/store.js";
 import { onMount } from 'svelte';
 
-let time = new Date();
+import { temporizador } from "./store/utils.js"
+let now;
 
 	onMount(() => {
 		type.set(id);
-
-        const interval = setInterval(() => {
-            time = new Date();
+        setInterval(() => {
+            now = temporizador();
         }, 1000);
-        return () => {
-            clearInterval(interval);
-        };
-
 	});
 
 import teacherViews from "./component/Views.svelte";
 import studentViews from "./student/Views.svelte";
 
 /* Funcional */
-$: _tiempo = time;
+$: _tiempo = now;
 
  </script>
     <svelte:head>
@@ -56,9 +52,9 @@ $: _tiempo = time;
     </div>
     <div class="uk-navbar-right">
         <span class="uk-margin-right uk-text-uppercase">
-            <span class="uk-text-center uk-text-meta uk-text-uppercase uk-margin-top">{
-                m.utc().tz("America/Argentina/Buenos_Aires").format("dddd, D [de] MMMM [de] YYYY")
-            } {moment(_tiempo).format("LTS")}</span>
+            <span class="uk-text-center uk-text-meta uk-text-uppercase uk-margin-top">
+             {moment(_tiempo).format("dddd, D [de] MMMM [de] YYYY, h:mm:ss a")}
+             </span>
         </span>
     </div>
 </nav>

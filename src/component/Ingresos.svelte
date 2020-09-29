@@ -27,6 +27,21 @@
 <FirebaseApp firebase={firebase}>
 <User let:user={user} let:auth={auth} >
 
+<nav class="uk-navbar-transparent" uk-navbar>
+    <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><Link go="back" ><span class="uk-margin-small-right" uk-icon="icon:  arrow-left; ratio: 2" uk-tooltip="title: Atras; pos: right"></span></Link></li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+        <li class="uk-active"><Link href="/{sha512('respuestas')}/{id}" ><span class="uk-margin-small-right" uk-icon="icon: folder; ratio: 2" uk-tooltip="title: Corregir examenes; pos: left"></span></Link></li>
+        </ul>
+    </div>
+</nav>
+
+
+
 <Collection  path={`examenes`} query={ (ref) => ref.where("uid","==",`${user.uid}`)} let:data let:ref log>
 <div class="uk-container uk-margin-top" slot="loading"><div uk-spinner></div></div>
 <div class="uk-container uk-margin-top" slot="fallback">
@@ -42,19 +57,6 @@
     </div>
 {:else}
 
-
-<nav class="uk-navbar-transparent" uk-navbar>
-        <div class="uk-navbar-left">
-            <ul class="uk-navbar-nav">
-                <li class="uk-active"><Link go="back" ><span class="uk-margin-small-right" uk-icon="icon:  arrow-left; ratio: 2" uk-tooltip="title: Atras; pos: right"></span></Link></li>
-            </ul>
-        </div>
-        <div class="uk-navbar-right">
-        	<ul class="uk-navbar-nav">
-            <li class="uk-active"><Link href="/{sha512('respuestas')}/{id}" ><span class="uk-margin-small-right" uk-icon="icon: folder; ratio: 2" uk-tooltip="title: Corregir examenes; pos: left"></span></Link></li>
-            </ul>
-        </div>
-</nav>
 <div class="uk-container">
 	
 <Collection path={`ingresos`} query={ (ref) => ref.where("codigodeExamen","==",`${id}`)} let:data let:ref log>
