@@ -186,9 +186,8 @@
 						{moment(examen.finaliza).format("LLL")} 
 						<span class="uk-text-bold">Duración {moment.duration(examen.duracion).asMinutes()} minutos.</span>
 					    <div class="uk-margin">
-
-
-		{#if (examen.inicia<=_tiempo && examen.finaliza>=_tiempo) }
+					    	
+		{#if ( moment.utc( Date.parse(new Date()) ).isBetween( examen.inicia,examen.finaliza ) && examen.inicia<=_tiempo && examen.finaliza>=_tiempo) }
 			<div class="uk-inline">
 				<a href="javascript:void(0)" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: copy" on:click={()=>{copyTextToClipboard(examen.id)}}></a>
 				<input class="uk-input uk-form-blank uk-form-width-large" value={examen.id} type="text">
