@@ -15,10 +15,10 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
 <FirebaseApp {firebase}>
 <User let:user={user} let:auth={auth} >
 <main class="uk-margin-remove-top" uk-height-viewport="expand: true">
-<div class="uk-section " >
 
 
-    <div class="uk-container">
+
+    <div class="uk-container uk-margin-small-top">
     <!--<div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
         <div>
             <div class="uk-card uk-card-muted uk-card-large uk-card-hover uk-card-body">
@@ -66,13 +66,13 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
             </div>
         </div>
 	</div>
-</div>
+
 
 </main>
-<footer>
+
     <div class="uk-background-secondary uk-padding uk-panel">
         <span class="uk-float-right uk-text-meta">Cybernetically enhanced web apps | <a href="https://svelte.dev/" target="_blank"><span class="uk-text-warning"> svelte</span></a></span>
     </div>
-</footer>
+
  </User>
 </FirebaseApp>
