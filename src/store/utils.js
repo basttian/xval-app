@@ -1,4 +1,4 @@
-import { onDestroy } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 	import moment from 'moment';
 	import 'moment/locale/es';
 	import m from 'moment-timezone';
@@ -11,6 +11,13 @@ export function onInterval(callback, milliseconds) {
 	});
 }
 
+let realTime;
+
 export function temporizador(){
-		return m.utc().tz("America/Argentina/Buenos_Aires");
+	fetch("https://worldtimeapi.org/api/ip")
+		.then(response => response.json())
+  		.then(data => 
+		realTime = moment(data.datetime.valueOf())
+	);
+		return realTime;
     }
