@@ -79,7 +79,6 @@ document.onkeydown = function(){
 </script>
 <svelte:head>
 <title>Home</title>
-<link rel="stylesheet" href="./fonts/stylesheet.css" />
 <style>
     body{
         overscroll-behavior: none;
@@ -114,7 +113,7 @@ document.onkeydown = function(){
 
 <div  slot="signed-out">
 <main class="uk-background-secondary" uk-height-viewport="expand: true">
-  <div class="uk-section uk-section-xlarge uk-light uk-background-cover" style="background-image: url(../dark.jpg)">
+  <div class="uk-section uk-section-xlarge uk-light ">
   <div class="uk-container">
   <h1 class="fontSizeh1">Hola!</h1>
   <p class="paragraphp">Debes iniciar sesion antes de comenzar.</p>

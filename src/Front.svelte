@@ -5,8 +5,8 @@ import { Router, Route, Link, router } from 'yrv';
 import sha512 from 'crypto-js/sha512';
 import CryptoJS from "crypto-js";
 // Carbon icons
-import Education24 from "carbon-icons-svelte/lib/Education24";
-import UserProfile24 from "carbon-icons-svelte/lib/UserProfile24";
+import Education24 from "carbon-icons-svelte/lib/Education32";
+import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
 
 </script>
 <svelte:head>
@@ -14,31 +14,57 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile24";
 </svelte:head>
 <FirebaseApp {firebase}>
 <User let:user={user} let:auth={auth} >
-<main class="uk-background-secondary" uk-height-viewport="expand: true">
-<div class="uk-section uk-section-xlarge uk-light uk-background-cover" style="background-image: url(./dark.jpg)">
-    <div class="uk-container">
-	<h1 class="fontSizeh1">Hola {user.displayName}</h1>
+<main class="uk-margin-remove-top" uk-height-viewport="expand: true">
+<div class="uk-section " >
 
-    <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+
+    <div class="uk-container">
+    <!--<div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
         <div>
-            <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
-                <h3 class="uk-card-title paragraphp"><Education24 /> Soy estudiante.</h3>
+            <div class="uk-card uk-card-muted uk-card-large uk-card-hover uk-card-body">
+                <h3 class="uk-card-title uk-text-center"><Education24 /></h3>
                 <Link 
                 href="/{sha512('principal')}/student"
                 class="uk-button uk-button-default uk-width-1-1 buttonb">Aprendo</Link>
             </div>
         </div>
         <div>
-            <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
-                <h3 class="uk-card-title paragraphp"><UserProfile24 /> Soy profesor.</h3>
+            <div class="uk-card uk-card-muted uk-card-large uk-card-hover uk-card-body">
+                <h3 class="uk-card-title uk-text-center"><UserProfile24 /></h3>
                 <Link
                 href="/{sha512('principal')}/teacher"
                 class="uk-button uk-button-default uk-width-1-1 buttonb">Educo</Link>
             </div>
         </div>
-    </div>
-
-
+    </div>-->
+            <div class="uk-child-width-1-2@m" uk-grid>
+            <div>
+                <div class="uk-card uk-card-default" uk-scrollspy="cls: uk-animation-slide-left; repeat: true">
+                    <div class="uk-card-media-top">
+                        <img class="uk-margin-small-top uk-margin-small-left" src="images/diploma.svg" width="100" height="100" alt="">
+                    </div>
+                    <div class="uk-card-body">
+                        
+                        <Link 
+                            href="/{sha512('principal')}/student"
+                            class="uk-button uk-button-secondary uk-width-1-1">estudiante</Link>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-default" uk-scrollspy="cls: uk-animation-slide-right; repeat: true">
+                     <div class="uk-card-media-top uk-margin-small-left">
+                        <img class="uk-margin-small-top" src="images/ensenanza.svg" width="100" height="100" alt="">
+                    </div>
+                    <div class="uk-card-body">
+                        
+                        <Link
+                            href="/{sha512('principal')}/teacher"
+                            class="uk-button uk-button-secondary uk-width-1-1">profesor</Link>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</div>
 </div>
 
