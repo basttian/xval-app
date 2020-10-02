@@ -123,11 +123,11 @@ document.onkeydown = function(){
   </div>
   </div>
 </main>
-
+<footer>
     <div class="uk-background-secondary uk-padding uk-panel">
         <span class="uk-float-right uk-text-meta">Cybernetically enhanced web apps | <a href="https://svelte.dev/" target="_blank"><span class="uk-text-warning"> svelte</span></a></span>
     </div>
-
+</footer>
 </div>
 
 
