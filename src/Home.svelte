@@ -18,12 +18,12 @@ import { type } from "./store/store.js";
 import { onMount } from 'svelte';
 
 import { temporizador } from "./store/utils.js"
-let now;
+let now = temporizador();
 
-	onMount(() => {
+	onMount(async () => {
 		type.set(id);
-        setInterval(() => {
-            now = temporizador();
+        await setInterval(() => {
+            now = moment().add(1000,'milliseconds');
         }, 1000);
 	});
 
@@ -37,7 +37,7 @@ $: _tiempo = now;
     <svelte:head>
         <title>App | {id}</title>
     </svelte:head>
-  
+
 <FirebaseApp {firebase}>
 <User let:user={user} let:auth={auth} >
 
