@@ -13,10 +13,10 @@
 	import { Router, Route, Link } from 'yrv';
 	import { temporizador } from "../store/utils.js"
 
-	let now = temporizador();
+	let now;
 	 onMount(async() => {
 	 	await setInterval(() => {
-            now = moment().add(1000,'milliseconds');
+            now = temporizador();
         }, 1000);
 	 })
 

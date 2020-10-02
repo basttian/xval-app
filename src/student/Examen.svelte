@@ -24,7 +24,7 @@
 
     import { temporizador } from "../store/utils.js"
     
-   let now = temporizador();
+   let now;
    onMount(async () => {
       await db.doc(`examenes/${id}`).get().then(function(doc) {
             if (doc.exists) {
@@ -46,7 +46,7 @@
         // };
 
         setInterval(() => {
-            now = moment().add(1000,'milliseconds');
+            now = temporizador();
         }, 1000);
 
         }).catch(function(error) {
