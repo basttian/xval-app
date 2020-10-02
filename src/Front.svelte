@@ -14,11 +14,13 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
 </svelte:head>
 <FirebaseApp {firebase}>
 <User let:user={user} let:auth={auth} >
-<main class="uk-margin-remove-top" uk-height-viewport="expand: true">
+
+<div class="uk-container uk-margin-small-top">    
+<main uk-height-viewport="expand: true">
 
 
 
-    <div class="uk-container uk-margin-small-top">
+
     <!--<div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
         <div>
             <div class="uk-card uk-card-muted uk-card-large uk-card-hover uk-card-body">
@@ -47,7 +49,7 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
                         
                         <Link 
                             href="/{sha512('principal')}/student"
-                            class="uk-button uk-button-secondary uk-width-1-1">estudiante</Link>
+                            class="uk-button uk-button-secondary uk-button-large uk-width-1-1">estudiante</Link>
                     </div>
                 </div>
             </div>
@@ -60,19 +62,18 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
                         
                         <Link
                             href="/{sha512('principal')}/teacher"
-                            class="uk-button uk-button-secondary uk-width-1-1">profesor</Link>
+                            class="uk-button uk-button-secondary uk-button-large uk-width-1-1">profesor</Link>
                     </div>
                 </div>
             </div>
         </div>
-	</div>
-
-
+	
 </main>
-
-    <div class="uk-background-secondary uk-padding uk-panel">
+</div>
+<footer>
+    <div class="uk-background-secondary uk-padding uk-panel uk-position-bottom uk-overlay uk-overlay-default">
         <span class="uk-float-right uk-text-meta">Cybernetically enhanced web apps | <a href="https://svelte.dev/" target="_blank"><span class="uk-text-warning"> svelte</span></a></span>
     </div>
-
+</footer>
  </User>
 </FirebaseApp>
