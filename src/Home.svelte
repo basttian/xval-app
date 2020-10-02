@@ -18,12 +18,12 @@ import { type } from "./store/store.js";
 import { onMount } from 'svelte';
 
 import { temporizador } from "./store/utils.js"
-let now = temporizador();
+let now;
 
 	onMount(async () => {
 		type.set(id);
         await setInterval(() => {
-            now = moment().add(1000,'milliseconds');
+            now = temporizador();
         }, 1000);
 	});
 
