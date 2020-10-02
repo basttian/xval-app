@@ -15,30 +15,9 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
 <FirebaseApp {firebase}>
 <User let:user={user} let:auth={auth} >
 
-<div class="uk-container uk-margin-small-top">    
+<div class="uk-container uk-margin-small-top uk-margin-xlarge-bottom">    
 <main uk-height-viewport="expand: true">
 
-
-
-
-    <!--<div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
-        <div>
-            <div class="uk-card uk-card-muted uk-card-large uk-card-hover uk-card-body">
-                <h3 class="uk-card-title uk-text-center"><Education24 /></h3>
-                <Link 
-                href="/{sha512('principal')}/student"
-                class="uk-button uk-button-default uk-width-1-1 buttonb">Aprendo</Link>
-            </div>
-        </div>
-        <div>
-            <div class="uk-card uk-card-muted uk-card-large uk-card-hover uk-card-body">
-                <h3 class="uk-card-title uk-text-center"><UserProfile24 /></h3>
-                <Link
-                href="/{sha512('principal')}/teacher"
-                class="uk-button uk-button-default uk-width-1-1 buttonb">Educo</Link>
-            </div>
-        </div>
-    </div>-->
             <div class="uk-child-width-1-2@m" uk-grid>
             <div>
                 <div class="uk-card uk-card-default" uk-scrollspy="cls: uk-animation-slide-left; repeat: true">
@@ -71,7 +50,7 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
 </main>
 </div>
 <footer>
-    <div class="uk-background-secondary uk-padding uk-panel uk-position-bottom uk-overlay uk-overlay-default">
+    <div class="uk-background-secondary uk-padding uk-panel uk-position-bottom uk-overlay uk-overlay-default uk-position-fixed">
         <span class="uk-float-right uk-text-meta">Cybernetically enhanced web apps | <a href="https://svelte.dev/" target="_blank"><span class="uk-text-warning"> svelte</span></a></span>
     </div>
 </footer>
