@@ -124,11 +124,17 @@
 <User let:user={user} let:auth={auth} on:user>
 <div class="uk-container uk-margin-bottom">
 
+<!-- localstorage -->
+{#if !localStorage.showalert}
 	<div class="uk-alert-primary" uk-alert>
-		<button class="uk-alert-close" uk-close></button>
+		<button class="uk-alert-close" uk-close
+		on:click={()=> localStorage.showalert = true }
+		></button>
 		<span class="uk-text-muted">Hola!! {user.displayName}, si cuentas con el código ingresalo en la casilla de abajo.</span>
 		<p><span uk-icon="info"></span> Información !! Al ingresar al examen el tiempo comenzará a correr.</p>
 	</div>
+{/if}
+
 
 	<div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid>
     <div>
