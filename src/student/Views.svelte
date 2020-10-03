@@ -11,17 +11,24 @@
 	
 	import { onMount } from 'svelte';
 	import { Router, Route, Link } from 'yrv';
-	import { temporizador } from "../store/utils.js"
 
-	let now;
-	 onMount(async() => {
-	 	await setInterval(() => {
-            now = temporizador();
+	let realTime;
+	onMount(async() => {
+
+	await fetch("https://worldtimeapi.org/api/ip")
+		.then(response => response.json())
+  		.then(data => 
+		realTime = data.datetime
+	);
+
+	 	setInterval(() => {
+            realTime = moment(realTime).add(1000,'milliseconds');
         }, 1000);
+        return() =>{clearInterval(realTime)}
 	 })
 
-	/* Funcional peron no*/
-    $: _tiempo = now;
+	/* Funcional */
+    $: _tiempo = realTime;
   
 
 	import sha512 from 'crypto-js/sha512';
@@ -61,7 +68,7 @@
 						UIkit.notification({
 							message:`<span uk-icon='icon: warning'></span> Error! No puedes ingresar nuevamente al examen. Ingresaste el ${moment(doc.data().ingreso).format("LLL")}` ,
 							status: "danger",
-							timeout: 5000
+							timeout: 3000
 							});
 						return;
 					});
@@ -151,7 +158,7 @@
 		on:click={()=> addControlTest() }
 		> Comenzar con mi examen</button> -->
 		{#if showBtnIra}
-			<Link href="/{sha512('test')}/{codigo}/{$_userid}" ><button class="uk-button uk-button-primary uk-width-1-1">Ir a mi examen...</button></Link>
+			<Link href="/{sha512('test')}/{codigo}/{$_userid}" ><button class="uk-button uk-button-large uk-button-primary uk-width-1-1">Ir a mi examen...</button></Link>
 		{/if}
 	</div>
 	</div>
@@ -193,7 +200,7 @@
 						<span class="uk-text-bold">Duración {moment.duration(examen.duracion).asMinutes()} minutos.</span>
 					    <div class="uk-margin">
 					    	
-		{#if ( moment.utc( Date.parse(new Date()) ).isBetween( examen.inicia,examen.finaliza ) && examen.inicia<=_tiempo && examen.finaliza>=_tiempo) }
+		{#if ( moment.utc( _tiempo ).isBetween( examen.inicia,examen.finaliza ) ) }
 			<div class="uk-inline">
 				<a href="javascript:void(0)" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: copy" on:click={()=>{copyTextToClipboard(examen.id)}}></a>
 				<input class="uk-input uk-form-blank uk-form-width-large" value={examen.id} type="text">

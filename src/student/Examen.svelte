@@ -19,14 +19,12 @@
     const _usuario = get(_userid);
 
     import { onMount } from 'svelte';
-    //let _inicio, _fin,_duracion;
     let preguntas = [];
+    let realTime;
 
-    import { temporizador } from "../store/utils.js"
-    
-   let now;
-   onMount(async () => {
-      await db.doc(`examenes/${id}`).get().then(function(doc) {
+
+onMount(async() => {
+    await db.doc(`examenes/${id}`).get().then(async function(doc) {
             if (doc.exists) {
                 //_inicio = doc.data().inicia;
                 //_fin = doc.data().finaliza;
@@ -37,26 +35,25 @@
                 console.log("No such document!");
             }
 
-        // const interval = setInterval(() => {
-        //     now = new Date();
-        // }, 1000);
-
-        // return () => {
-        //     clearInterval(interval);
-        // };
+        await fetch("https://worldtimeapi.org/api/ip")
+            .then(response => response.json())
+            .then(data => 
+            realTime = data.datetime
+        );
 
         setInterval(() => {
-            now = temporizador();
+            realTime = moment(realTime).add(1000,'milliseconds');
         }, 1000);
+        return() =>{clearInterval(realTime)}
 
         }).catch(function(error) {
             console.log("Error getting document:", error);
         });
-   })
+})
 
 
     /* Funcional */
-    $: _tiempo = now;
+    $: _tiempo = realTime;
 
     /* Quill Editor I l it */
     import { quill } from 'svelte-quill'
@@ -195,12 +192,12 @@ let uidingreso;
 <FirebaseApp firebase={firebase}>
 <User let:user={user} let:auth={auth} >
 
-<!-- {Cookies.get('CO-ROUTE')} -->
+
 
 <Collection path={`ingresos`} 
 query={ (ref) => ref.where("codigodeExamen","==",`${id}`).where("uid","==",`${_usuario}`) }  
 let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingreso = e.detail.data[0].id}  > 
-<div class="uk-container uk-margin-top" slot="loading"><div uk-spinner></div></div>
+<div class="uk-container uk-margin-top" slot="loading"><span class="uk-text-italic">Buscando examen..</span></div>
 <div class="uk-container uk-margin-top" slot="fallback">
     Unable to display ...
 </div>
@@ -215,9 +212,9 @@ let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingre
 {:else if data.length === 1 }
 
 <Doc path={`ingresos/${uidingreso}`} let:data let:ref >
-<div slot="loading"><div uk-spinner></div></div>
+<div class="uk-container uk-margin-top" slot="loading"><span class="uk-text-italic">Buscando examen..</span></div>
 <!-- Oculto el examen con la condicion  -->
-{#if moment(data.ingreso).add(10, 'seconds').valueOf() <= moment().valueOf()  }<!-- para revisar -->
+{#if moment(data.ingreso).add(10, 'seconds').valueOf() <= moment().valueOf() }<!-- para revisar -->
     <div class="uk-container uk-margin-top">
         <div class="uk-alert-danger" uk-alert>
             <a class="uk-alert-close" uk-close></a>
@@ -226,14 +223,12 @@ let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingre
     </div>
 {:else}
 
-
-
 <!-- Verificacion que el examen este dentro de lo programado -->
 <Doc path={`examenes/${id}`} let:data={examenesData} let:ref={examenesReference} >
 <div slot="loading"><div uk-spinner></div></div>
 
 <!-- Si fue programado -->
-{#if examenesData.porfecha && examenesData.inicia <= _tiempo && examenesData.finaliza >= _tiempo}
+{#if examenesData.porfecha && moment.utc( _tiempo ).isBetween( examenesData.inicia,examenesData.finaliza )  }
 
 
 <!-- Muestro el examen  -->
@@ -249,7 +244,12 @@ let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingre
             </ul>
         </div>
         <div class="uk-navbar-right">
-            <span class="uk-margin-right">Tiempo del examen: {moment.utc(moment(data.finaliza).diff(moment(_tiempo))).format('HH:mm:ss') } <span uk-icon="icon: history"></span></span>
+            <span class="uk-margin-right">Tiempo del examen: 
+
+                {moment(moment(data.finaliza).diff(moment(_tiempo))).format('HH:mm:ss') } 
+                
+
+                <span uk-icon="icon: history"></span></span>
         </div>
     </nav>
     </div>
@@ -297,13 +297,14 @@ let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingre
 <!-- Panel de respuestas -->
 <div class="editor" use:quill={options} on:text-change={e => content = e.detail}></div>
 <!-- {@html content.html} -->
-<button class="uk-button uk-button-primary uk-margin" 
-disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estudiante} >Enviar respuesta</button>
+<button class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin" 
+disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estudiante} >Enviar respuesta
 
 {#await promise}
         <div uk-spinner></div>
 {/await}
 
+</button>
 
 </form>
 <p><span class="uk-label uk-label-warning">Nota</span> Asegúrate de colocar tu DNI antes de enviar el examen.</p>
@@ -318,14 +319,14 @@ disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estud
 </Doc>
 </div>
 
-
+<!-- #################################################################################################################### -->
 <!-- Si no fue programado -->
 {:else if !examenesData.porfecha}
 
 
 <!-- Muestro el examen  -->
 <Doc path={`examenes/${id}`} let:data let:ref log on:data={(e) =>  e.empty ? 0 : testTime = moment.duration(e.detail.data.finaliza - e.detail.data.inicia).asSeconds() } >
-<div class="uk-float-right" slot="loading"><div uk-spinner></div></div>
+<div class="uk-float-right" slot="loading"><span class="uk-text-italic">Buscando examen..</span></div>
 <div class="uk-preserve-color">
     <div uk-sticky="offset: 0; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent; top: 0">
     <nav class="uk-navbar-container" uk-navbar>
@@ -385,12 +386,14 @@ disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estud
 <!-- Panel de respuestas -->
 <div class="editor" use:quill={options} on:text-change={e => content = e.detail}></div>
 <!-- {@html content.html} -->
-<button class="uk-button uk-button-primary uk-margin" 
-disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estudiante} >Enviar respuesta</button>
+<button class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin" 
+disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estudiante} >Enviar respuesta
 
 {#await promise}
         <div uk-spinner></div>
 {/await}
+
+</button>
 
 </form>
 <p><span class="uk-label uk-label-warning">Nota</span> Asegúrate de colocar tu DNI antes de enviar el examen.</p>
