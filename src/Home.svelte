@@ -17,21 +17,28 @@ import sha512 from 'crypto-js/sha512';
 import { type } from "./store/store.js";
 import { onMount } from 'svelte';
 
-import { temporizador } from "./store/utils.js"
-let now;
+let realTime;
 
-	onMount(async () => {
+onMount(async () => {
 		type.set(id);
-        await setInterval(() => {
-            now = temporizador();
+
+    await fetch("https://worldtimeapi.org/api/ip")
+        .then(response => response.json())
+        .then(data => 
+        realTime = moment(data.datetime).valueOf()
+    );
+
+        setInterval(() => {
+            realTime = moment(realTime).add(1000,'milliseconds');
         }, 1000);
-	});
+         return() =>{clearInterval(realTime)}
+});
 
 import teacherViews from "./component/Views.svelte";
 import studentViews from "./student/Views.svelte";
 
 /* Funcional */
-$: _tiempo = now;
+$: _tiempo = realTime;
 
  </script>
     <svelte:head>
