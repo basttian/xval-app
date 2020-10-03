@@ -50,9 +50,11 @@ import UserProfile24 from "carbon-icons-svelte/lib/UserProfile32";
 </main>
 </div>
 <footer>
+    <div uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
     <div class="uk-background-secondary uk-padding uk-panel uk-position-bottom uk-overlay uk-overlay-default uk-position-fixed">
         <span class="uk-float-right uk-text-meta">Cybernetically enhanced web apps | <a href="https://svelte.dev/" target="_blank"><span class="uk-text-warning"> svelte</span></a></span>
     </div>
+    </div>  
 </footer>
  </User>
 </FirebaseApp>
