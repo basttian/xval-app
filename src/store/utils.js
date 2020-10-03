@@ -11,13 +11,20 @@ export function onInterval(callback, milliseconds) {
 	});
 }
 
-let realTime;
 
-export function temporizador(){
-	fetch("https://worldtimeapi.org/api/ip")
-		.then(response => response.json())
-  		.then(data => 
-		realTime = moment(data.datetime.valueOf())
-	);
-		return realTime;
-    }
+
+// let realTime;
+// export function temporizador(){
+// 	fetch("https://worldtimeapi.org/api/ip")
+// 		.then(response => response.json())
+//   		.then(data => 
+// 		realTime = data.datetime
+// 	);
+// 		return moment(realTime).valueOf();
+//     }
+// const interval = setInterval(() => {
+//     now = new Date();
+// }, 1000);
+// return () => {
+//    clearInterval(interval);
+// };
