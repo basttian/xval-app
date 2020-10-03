@@ -17,6 +17,7 @@
     const delIngreso = async (i) => {
     	console.log(i);
     }
+ 
 
 </script>
     <svelte:head>
@@ -34,7 +35,7 @@
         </ul>
     </div>
     <div class="uk-navbar-right">
-        <ul class="uk-navbar-nav">
+        <ul class="uk-navbar-nav">      
         <li class="uk-active"><Link href="/{sha512('respuestas')}/{id}" ><span class="uk-margin-small-right" uk-icon="icon: folder; ratio: 2" uk-tooltip="title: Corregir examenes; pos: left"></span></Link></li>
         </ul>
     </div>
@@ -83,10 +84,10 @@
 	            <td><button class="uk-button uk-button-text" on:click={()=> {
 					UIkit.modal.confirm(`Esta seguro que desea eliminar el ingreso de ${item.nombre}.`).then(function() {
                     item.ref.delete().then(()=>{
-                    UIkit.notification({message: `<span uk-icon='icon: trash'></span> Ingreso eliminado éxitosamente.`, pos: 'top-center', status: 'primary'})
+                    UIkit.notification({message: `<span uk-icon='icon: trash'></span> Ingreso eliminado éxitosamente.`, pos: 'bottom-center', status: 'danger'})
                     })
                 }, function () {
-                    UIkit.notification({message: "<span uk-icon='icon: warning'></span> Operación cancelada.", pos: 'top-center', status: 'danger'})
+                    UIkit.notification({message: "<span uk-icon='icon: warning'></span> Operación cancelada.", pos: 'bottom-center', status: 'primary'})
                 })}}> <span uk-icon="icon: close"></span> </button> </td>
 	        </tr>	
     	{/each}
