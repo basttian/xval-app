@@ -7,7 +7,8 @@
     import moment from 'moment';
     import 'moment/locale/es';
     import { Router, Route, Link } from 'yrv';
- 
+    // router not  use
+    export let router = {};
     /* Quill Editor I l it */
     import { quill } from 'svelte-quill'
     var toolbarOptions = [

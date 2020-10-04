@@ -178,8 +178,7 @@ const SaveTimeOut = async() => {
     });
 }
 
-/* No se - despues lo veo */
-import Cookies from 'js-cookie';
+
 let uidingreso;
 
 </script>

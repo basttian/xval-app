@@ -11,7 +11,9 @@
 	
 	import { onMount } from 'svelte';
 	import { Router, Route, Link } from 'yrv';
-
+	// router not  use
+	export let router = {};
+	
 	let realTime;
 	onMount(async() => {
 
@@ -115,7 +117,7 @@
 			}); 
 			}
 		catch(err) {
-			console.log("error");
+			console.log(err);
 		}
 	}
 

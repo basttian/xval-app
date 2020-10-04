@@ -1,9 +1,9 @@
 <script>
 
 import { Router, Route, Link, router } from 'yrv';
-router.subscribe(e => {
-  if (!e.initial) console.log(e);
-});
+// router.subscribe(e => {
+//   if (!e.initial) console.log(e);
+// });
 import sha512 from 'crypto-js/sha512';
 import { FirebaseApp, User, Doc, Collection } from "sveltefire";
 import firebase from "firebase/app";

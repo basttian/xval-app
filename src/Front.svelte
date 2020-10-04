@@ -1,7 +1,9 @@
 <script>
 import { FirebaseApp, User, Doc, Collection } from "sveltefire";
 import firebase from "firebase/app";
-import { Router, Route, Link, router } from 'yrv';
+import { Router, Route, Link } from 'yrv';
+// router not  use
+export let router = {};
 import sha512 from 'crypto-js/sha512';
 import CryptoJS from "crypto-js";
 // Carbon icons

@@ -3,6 +3,8 @@ import { FirebaseApp, User, Doc, Collection } from "sveltefire";
 import firebase from "firebase/app";
 const db = firebase.firestore();
 import { Router, Route, Link } from 'yrv';
+// router not  use
+export let router = {};
 import sha512 from 'crypto-js/sha512';
 
 let promise;
