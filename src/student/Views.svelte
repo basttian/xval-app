@@ -34,7 +34,6 @@
   
 
 	import sha512 from 'crypto-js/sha512';
-	import Cookies from 'js-cookie';
 	let codigo = '';
 	let promise;
 	let showBtnIra = false;

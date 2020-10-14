@@ -24,5 +24,5 @@
     {#if timer < 1}
       <h1>Starting soon....</h1>
     {:else}
-      <span class="uk-margin-right">Tiempo del examen: {pad(hours)}:{pad(minutes)}:{pad(seconds)} <span uk-icon="future"></span></span>
+      <span class="uk-margin-right">Tiempo del examen: {pad(hours)}:{pad(minutes)}:{pad(seconds)} <span uk-icon="history"></span></span>
     {/if}

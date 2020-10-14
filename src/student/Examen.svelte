@@ -131,11 +131,12 @@ import CRONOMETRO from "./Cronos.svelte";
 /* Importo el temporizador */
 import { onInterval } from '../store/utils.js';
 let testTime ;
+
 /* Comienza a correr automaticamente con el valor de tiempo para el examen*/
 /* handlerSecond se inicializa en 1 */
 onInterval(() => testTime -= handlerSecond, 1000);
 /* Si testTime llega a cero se ejecuta la funcion Guardar fuera de tiempo */
-$: if (testTime === 0){
+$: if (testTime === 0 ){
         SaveTimeOut();
     }
 
@@ -145,7 +146,10 @@ const SaveTimeOut = async() => {
     promise = rRef.get().then(async collections => {
       collections.forEach(collection => {
           console.log('Found with id:', collection.id);
-          UIkit.notification({message:"<span uk-icon='icon: warning'></span> Error! Su examen ya se encuentra registrado. ",status: "danger"});
+          UIkit.notification({message:"<span uk-icon='icon: warning'></span> Error! Su examen ya se encuentra registrado. ",
+            status: "danger",  
+            pos: 'top-center',
+            timeout: 5000});
           return;
       });
       /* Si no hay examen previo del alumno guardamos la informacion */
@@ -167,7 +171,7 @@ const SaveTimeOut = async() => {
                 UIkit.notification({
                 message: '<span uk-icon="icon: warning"></span> El tiempo ha expirado!',
                 status: 'danger',
-                pos: 'top-center',
+                pos: 'bottom-center',
                 timeout: 5000 });
                 /* Disable boton de envio del examen */
                 disablebtn=true;
@@ -224,7 +228,7 @@ let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingre
 
 <!-- Verificacion que el examen este dentro de lo programado -->
 <Doc path={`examenes/${id}`} let:data={examenesData} let:ref={examenesReference} >
-<div slot="loading"><div uk-spinner></div></div>
+<div class="uk-container uk-margin-top" slot="loading"><span class="uk-text-italic">Cargando examen..</span></div>
 
 <!-- Si fue programado -->
 {#if examenesData.porfecha && moment.utc( _tiempo ).isBetween( examenesData.inicia,examenesData.finaliza )  }
@@ -395,8 +399,9 @@ disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estud
 </button>
 
 </form>
+<div class="uk-margin-large-bottom">
 <p><span class="uk-label uk-label-warning">Nota</span> Asegúrate de colocar tu DNI antes de enviar el examen.</p>
-
+</div>
 <!-- Si no se encuentra -->
 <div slot="fallback">
     <div class="uk-alert-danger" uk-alert>
@@ -421,6 +426,7 @@ disabled={Number(content.text.length)<=3 || disablebtn || Number(l)!=8 || !estud
 </Doc>
 {/if}
 </Collection>
+
 </User>
 </FirebaseApp>
 
