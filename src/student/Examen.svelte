@@ -247,12 +247,9 @@ let:data let:ref log on:data={(e) =>  e.detail.data[0] === void 0 ? 0 : uidingre
             </ul>
         </div>
         <div class="uk-navbar-right">
-            <span class="uk-margin-right">Tiempo del examen: 
-
-                {moment(moment(data.finaliza).diff(moment(_tiempo))).format('HH:mm:ss') } 
-                
-
-                <span uk-icon="icon: history"></span></span>
+            <span class="uk-margin-right">
+                Finaliza en&nbsp;{Math.floor(moment.duration(data.finaliza - _tiempo).asMinutes())}&nbsp;minutos.&nbsp;
+            <span uk-icon="icon: history"></span></span>
         </div>
     </nav>
     </div>
