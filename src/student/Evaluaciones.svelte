@@ -28,6 +28,7 @@
     // Modulo
     import MSJBACK from "../modules/Mensajesback.svelte";
 
+    import printJS from 'print-js';
     async function PrinMyTest(idex){
         var docRef = await db.doc(`respuestas/${idex}`);
         docRef.get().then(function(doc) {
@@ -35,7 +36,7 @@
 
         var someJSONdata = [{ 
             "preguntas":[doc.data().preguntas], 
-            "respuestas":[doc.data().respuestas]  
+            "respuestas":[doc.data().respuestas]
         }];
 
             printJS({ printable: someJSONdata, 
@@ -44,10 +45,7 @@
                     {field:'preguntas', displayName:'Preguntas'},
                     {field:'respuestas', displayName:'Respuestas'}
                     ],
-                targetStyles:["*"],
                 repeatTableHeader:false,
-                scanStyles:true,
-                style:"width: 100%;position: absolute;",
                 documentTitle: `Nota del examen: ${doc.data().nota}`,
                 header: `<p>${doc.data().nombre} - ${doc.data().dni}</p> `,
             })
