@@ -54,7 +54,7 @@ let scoops = false;
 import printJS from 'print-js';
 const printEvaluacion = (nombre,dni,nota,preguntas,respuestas) => {
     let someJSONdata = [{ "nombre":nombre, "dni":dni, "nota":nota, "preguntas":[preguntas], "respuestas":[respuestas]  }];
-    printJS({printable: someJSONdata, properties: [{field:'preguntas', displayName:'Preguntas'},{field:'respuestas', displayName:'Respuestas'}], type: 'json', header: `<p>Evaluacion de ${nombre}, DNI:${dni}, Nota: ${nota} </p>` });
+    printJS({printable: someJSONdata, properties: [{field:'preguntas', displayName:'Preguntas'},{field:'respuestas', displayName:'Respuestas'}], documentTitle: `${nombre}` , repeatTableHeader:false, type: 'json', header: `<p>Evaluacion de ${nombre}, DNI:${dni}, Nota: ${nota} </p>` });
 }
 
 const printEvaluaciones = async() => {
@@ -63,7 +63,12 @@ const printEvaluaciones = async() => {
         if (doc.exists) {
             printJS({ printable: 'printJS-lista', 
                 type: 'html', 
-                header: `${doc.data().titulo} - ${doc.data().descripcion} `,
+                targetStyles:["*"],
+                repeatTableHeader:false,
+                scanStyles:true,
+                style:"width: 100%;position: absolute;",
+                documentTitle: "Lista de notas.",
+                header: `<p>${doc.data().titulo} - ${doc.data().descripcion}</p> `,
                 ignoreElements:['noPrint']
             })
         } else {
@@ -155,8 +160,10 @@ const printEvaluaciones = async() => {
 <div class="uk-grid-divider uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid>
 <div class="uk-width-auto@m">
 
-<table class="uk-table uk-table-divider uk-table-small" id="printJS-lista">
-<caption><button class="uk-button uk-button-text" on:click={()=> printEvaluaciones() }> <span uk-icon="icon: print"></span> </button></caption>
+<div id="printJS-lista">
+
+<table class="uk-table uk-table-divider uk-table-small" >
+<caption><button id="noPrint" class="uk-button uk-button-text" on:click={()=> printEvaluaciones() }> <span uk-icon="icon: print"></span> </button></caption>
     <thead>
     <tr id="noPrint">
         <th>-</th>
@@ -190,7 +197,7 @@ const printEvaluaciones = async() => {
 {/each}
     </tbody>
 </table>
-
+</div>
 
 </div>
 
