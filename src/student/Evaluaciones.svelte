@@ -28,6 +28,38 @@
     // Modulo
     import MSJBACK from "../modules/Mensajesback.svelte";
 
+    async function PrinMyTest(idex){
+        var docRef = await db.doc(`respuestas/${idex}`);
+        docRef.get().then(function(doc) {
+        if (doc.exists) {
+
+        var someJSONdata = [{ 
+            "preguntas":[doc.data().preguntas], 
+            "respuestas":[doc.data().respuestas]  
+        }];
+
+            printJS({ printable: someJSONdata, 
+                type: 'json',
+                properties: [
+                    {field:'preguntas', displayName:'Preguntas'},
+                    {field:'respuestas', displayName:'Respuestas'}
+                    ],
+                targetStyles:["*"],
+                repeatTableHeader:false,
+                scanStyles:true,
+                style:"width: 100%;position: absolute;",
+                documentTitle: `Nota del examen: ${doc.data().nota}`,
+                header: `<p>${doc.data().nombre} - ${doc.data().dni}</p> `,
+            })
+        } else {
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+
+    }
+
 </script>
 
     <svelte:head>
@@ -83,15 +115,12 @@
 <ul class="js-filter uk-list uk-list-striped">
 {#each data as item} 
     <li data-date={item.fecha}>
+ 
     <a href="javascript:void(0)" on:click={()=> {
+        PrinMyTest(item.id);
+    }} uk-icon="icon: print"> </a>
 
-        UIkit.modal.confirm('<em>¿Eliminar este examen?</em><br>Si realizas esta acción, se eliminarán de forma permanente los datos.').then(function() {
-            item.ref.delete();
-        }, function () {
-            console.log('Rejected.')
-        })
 
-    }} uk-icon="icon: trash"> </a>
     <span class="{item.nota <= 6?'uk-label uk-label-danger':'uk-label uk-label-success'} ">{item.nota}</span>
     <span class="{item.corregido?'uk-label':'uk-label uk-label-danger'} ">{item.corregido?'Si':'No'}</span>
     {moment(item.fecha).format("lll")}  <a uk-icon="icon: search" on:click={() =>  idExamen={idex:`${item.idexamen}`,idDoc:`${item.id}`}  }></a></li>
@@ -150,6 +179,8 @@
             {/if}
         </div>
     </div>
+
+
 
         <!-- Mensaje al profesor -->
         <MSJBACK examenid={data.idexamen} parauser={values.uid}/>
