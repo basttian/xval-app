@@ -118,7 +118,7 @@ document.onkeydown = function(){
   <h1 class="fontSizeh1">Hola!</h1>
   <p class="paragraphp">Debes iniciar sesion antes de comenzar.</p>
   <div class="uk-position-top-right uk-overlay">
-  <a on:click={() => auth.signInWithPopup(provider)} class="uk-padding-small" uk-icon="icon: google-plus; ratio: 2"></a>
+  <a on:click={() => auth.signInWithPopup(provider)} class="uk-padding-small" uk-icon="icon: google; ratio: 2"></a>
   </div>
   </div>
   </div>
