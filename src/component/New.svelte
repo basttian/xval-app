@@ -23,6 +23,7 @@ let titulo = '';
 let descripcion ='';
 let status = false;
 let porFecha = false;
+let disponible = true;
 
 /* Almaceno con el evento change */
 let _i,_f;
@@ -74,7 +75,8 @@ let promise;
           status:status,
           titulo:titulo,
           uid: idusuario,
-          porfecha: porFecha
+          porfecha: porFecha,
+          disponible: disponible
         }).then(function(i) {
             cod = i.id;
             UIkit.notification({message: "<span uk-icon='icon: calendar'></span> Examen creado con éxito.", 

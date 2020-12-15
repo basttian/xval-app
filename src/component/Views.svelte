@@ -84,6 +84,8 @@ const copyTextToClipboard = (v) => {
     
 }
 
+// Activado o NO
+let statusTest = [];
 
 </script>
     <svelte:head>
@@ -113,7 +115,7 @@ const copyTextToClipboard = (v) => {
     </div>
 {:else}
 <div class="uk-child-width-1-1@s uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay: 300; repeat: false">
-    {#each data as item}
+    {#each data as item, i}
     <div>
         <div class="uk-card uk-card-secondary uk-card-hover uk-card-body">
             <ul uk-accordion="multiple: true">
@@ -137,6 +139,8 @@ const copyTextToClipboard = (v) => {
             </ul>
             <h3 class="uk-card-title">{item.titulo}</h3>
             <p>{item.descripcion}</p>
+
+
             <div class="uk-margin uk-align-center">
                 <div class="uk-inline">
                     <a class="uk-form-icon uk-form-icon-flip" href="javascript:void(0)" uk-icon="icon: copy"
@@ -146,6 +150,40 @@ const copyTextToClipboard = (v) => {
                     disabled={true} >
                 </div>
             </div>
+         
+            
+           <div>
+                <label><input class="uk-radio" type="radio" name={item.id} bind:group={statusTest[i]} value={true} 
+                  checked={item.disponible===true ? statusTest[i] = true : ''} 
+                  on:change={() => item.ref.update({
+                        disponible: true,
+                    }).then(resp=>{
+                        UIkit.notification({
+                                message: '<span uk-icon="icon: check"></span> Test actualizado correctamente.',
+                                status: 'primary',
+                                pos: 'top-right',
+                                timeout: 500
+                            });
+                        })
+                    } 
+                    > Test activado. </label>
+                <label><input class="uk-radio" type="radio" name={item.id} bind:group={statusTest[i]} value={false} 
+                  checked={item.disponible===false ? statusTest[i] = false: '' } 
+                  on:change={() => item.ref.update({
+                        disponible: false,
+                    }).then(resp=>{
+                        UIkit.notification({
+                                message: '<span uk-icon="icon: check"></span> Test actualizado correctamente.',
+                                status: 'primary',
+                                pos: 'top-right',
+                                timeout: 500
+                            });
+                        })
+                    } 
+                    > Test desactivado. </label>
+            </div>
+
+
         </div>
   
         {#await promise}
