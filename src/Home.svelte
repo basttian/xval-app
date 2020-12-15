@@ -22,11 +22,12 @@ let realTime;
 onMount(async () => {
 		type.set(id);
 
-    await fetch("https://worldtimeapi.org/api/ip")
-        .then(response => response.json())
-        .then(data => 
-        realTime = moment(data.datetime).valueOf()
-    );
+        await fetch("https://worldtimeapi.org/api/ip",{cache:'no-cache'}).then(response => response.json())
+            .then(data => 
+                realTime = data.datetime
+            ).catch(function(error) {
+                console.log('Error: \n', error);
+            });
 
         setInterval(() => {
             realTime = moment(realTime).add(1000,'milliseconds');
