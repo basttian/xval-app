@@ -17,11 +17,13 @@
 	let realTime;
 	onMount(async() => {
 
-	await fetch("https://worldtimeapi.org/api/ip")
-		.then(response => response.json())
-  		.then(data => 
-		realTime = data.datetime
-	);
+		await fetch("https://worldtimeapi.org/api/ip",{cache:'no-cache'}).then(response => response.json())
+		  	.then(data => 
+				realTime = data.datetime
+			).catch(function(error) {
+				console.log('Error: \n', error);
+			});
+
 
 	 	setInterval(() => {
             realTime = moment(realTime).add(1000,'milliseconds');
@@ -52,47 +54,67 @@
 
 	let eRef = await db.doc(`examenes/${cod}`);
 	promise = eRef.get().then(async function(docSnapshot) {
-			if (!docSnapshot.exists) {
-					eRef.onSnapshot((doc) => {
-						UIkit.notification({
-							message:"<span uk-icon='icon: warning'></span> Código de examen incorrecto.",
-							pos: "top-center",
-							status: "danger",
-							timeout: 2000
-						});
-					});
-			} else {
-					/* Chequeo si el usuario ya ingreso a esa evaluacion */
-					let iRef = await db.collection(`ingresos`).where('uid','==',$_userid).where('codigodeExamen','==',codigo);
-					promise = iRef.get().then(async collections => {
-					collections.forEach(doc => {
+			
+////////////////////////////////////////////////
+
+	if (!docSnapshot.exists) {
+		eRef.onSnapshot((doc) => {
+			UIkit.notification({
+				message:"<span uk-icon='icon: warning'></span> Código de examen incorrecto.",
+				pos: "top-center",
+				status: "danger",
+				timeout: 2000
+			});
+		});
+	}
+	else if(docSnapshot.exists)
+	{
+		eRef.onSnapshot((doc) => {
+			if(!doc.data().disponible){
+				UIkit.notification({
+					message:"<span uk-icon='icon: warning'></span> El examen ya no se encuentra disponible.",
+					pos: "top-center",
+					status: "danger",
+					timeout: 2000
+				});
+			}else{
+				/* Chequeo si el usuario ya ingreso a esa evaluacion */
+				let iRef = db.collection(`ingresos`).where('uid','==',$_userid).where('codigodeExamen','==',codigo);
+				promise = iRef.get().then(async function(cols){
+					cols.forEach(doc => {
 						UIkit.notification({
 							message:`<span uk-icon='icon: warning'></span> Error! No puedes ingresar nuevamente al examen. Ingresaste el ${moment(doc.data().ingreso).format("LLL")}` ,
 							status: "danger",
 							timeout: 3000
-							});
+						});
 						return;
 					});
 					/* Almaceno el ingreso */
-					if(collections.empty){
-				 		db.collection(`ingresos`).add({
-							ingreso:moment().valueOf(),
-							uid: $_userid,
-							codigodeExamen: codigo,
-							nombre: $_displayName,
-							}).then(function(){
-								 showBtnIra = true;
-								}).catch(function(e){
-									showBtnIra =false;
-								})
-							}
+					if(cols.empty){
+						db.collection(`ingresos`).add({
+						ingreso:moment().valueOf(),
+						uid: $_userid,
+						codigodeExamen: codigo,
+						nombre: $_displayName,
+						}).then(function(){
+							showBtnIra = true;
+						}).catch(function(e){
+							showBtnIra =false;
 						})
-				}
-		}).catch(function(error) {
-        	console.log("Error getting documents: ", error);
-    	});
+					}
+				});
+			}})
+		
 	}
-}
+
+////////////////////////////////////////////////
+			}).catch(function(error) {
+	        	console.log("Error getting documents: ", error);
+	    	});
+		}
+	}
+
+
 
 	const copyTextToClipboard = (v) => {
 		try{
